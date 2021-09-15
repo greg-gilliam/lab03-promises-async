@@ -8,3 +8,7 @@ export class SimpleDB {
     this.newFile = path.join(rootDir, fileName);
   }
 }
+
+// export class GetObjectClass {
+
+// }

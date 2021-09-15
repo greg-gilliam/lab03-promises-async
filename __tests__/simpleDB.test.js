@@ -23,3 +23,31 @@ describe('file copier', () => {
     });
   });
 });
+
+it('should save and retrieve an object', () => {
+  const savedInstance = new SavedObject(destination);
+  const getInstance = new GetObject(id);
+  const mabel = {
+    name: 'mabel',
+    age:5
+  };
+
+  return savedInstance
+    .save(mabel)
+    .then(() => {
+      return getInstance.get();
+    })
+    .then((booger) => {
+    //mabel.id?
+      expect(booger).toEqual(mabel);
+    });
+});
+
+it('should return null if no object was returned', () => {
+  const getInstance = new GetObject(id);
+
+  return getInstance.get().then((booger) => {
+    expect(booger).toBeNull();
+  });
+});
+       

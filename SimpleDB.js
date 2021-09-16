@@ -7,8 +7,10 @@ export class SimpleDB {
     const fileName = `${shortid.generate()}.txt`;
     this.newFile = path.join(rootDir, fileName);
   }
+
+  //save then serialize into json object
+
+  //get = parse
+
+//getAll
 }
-
-// export class GetObjectClass {
-
-// }

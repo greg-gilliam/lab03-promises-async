@@ -35,11 +35,11 @@ it('should save and retrieve an object', () => {
   return savedInstance
     .save(mabel)
     .then(() => {
-      return getInstance.get();
+      return getInstance.get(id);
     })
     .then((booger) => {
     //mabel.id?
-      expect(booger).toEqual(mabel);
+      expect(booger).toEqual(mabel.id);
     });
 });
 

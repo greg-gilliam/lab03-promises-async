@@ -6,14 +6,6 @@ export class SimpleDB {
   constructor(instance) {
     this.storeDest = instance;
   }
-
-// method that saves object
-  // save method takes in an object. generate Id & assign id to object Id..
-  // create JSON file name with object id.
-  // create path by joining location with the file name
-  // stringify object
-  // return written file of the path that is stringified.
-
   getPath(id){
     const fileName = `${id}.json`;
     const filePath = path.join(this.storeDest, fileName);

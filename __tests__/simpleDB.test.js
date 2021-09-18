@@ -3,16 +3,16 @@ import { SimpleDB } from '../SimpleDB.js';
 
 
 describe('file copier', () => {
-  const destination = './__tests__/destination';
+  const storeDest = '../store';
 
   beforeEach(() => {
-    return rm(destination, { force: true, recursive: true }).then(() => {
-      return mkdir(destination);
+    return rm(storeDest, { force: true, recursive: true }).then(() => {
+      return mkdir(storeDest);
     });
   });
 
   it('should have an id', () => {
-    const db = new SimpleDB(destination);
+    const db = new SimpleDB(storeDest);
     const mabel = {
       name: 'mabel',
       age:5
@@ -22,32 +22,29 @@ describe('file copier', () => {
       expect(mabel.id).toEqual(expect.any(String)); 
     });
   });
-});
 
-it('should save and retrieve an object', () => {
-  const savedInstance = new SavedObject(destination);
-  const getInstance = new GetObject(id);
-  const mabel = {
-    name: 'mabel',
-    age:5
-  };
+  it('should save and retrieve an object', () => {
+    const savedInstance = new SimpleDB(storeDest);
+    const mabel = {
+      name: 'mabel',
+      age:5
+    };
 
-  return savedInstance
-    .save(mabel)
-    .then(() => {
-      return getInstance.get(id);
-    })
-    .then((booger) => {
-    //mabel.id?
-      expect(booger).toEqual(mabel.id);
-    });
-});
-
-it('should return null if no object was returned', () => {
-  const getInstance = new GetObject(id);
-
-  return getInstance.get().then((booger) => {
-    expect(booger).toBeNull();
+    return savedInstance
+      .save(mabel)
+      .then(() => {
+        return savedInstance.get(mabel.id);
+      })
+      .then((booger) => {
+        expect(booger).toEqual(mabel);
+      });
   });
-});
-       
+
+  it('should return null if no object was returned', () => {
+    const getInstance = new SimpleDB(storeDest);
+
+    return getInstance.get().then((booger) => {
+      expect(booger).toBeNull();
+    });
+  });
+});       

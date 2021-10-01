@@ -1,7 +1,6 @@
 import { mkdir, rm } from 'fs/promises';
 import { SimpleDB } from '../SimpleDB.js';
 
-
 describe('file copier', () => {
   const storeDest = '../store';
 
@@ -15,11 +14,11 @@ describe('file copier', () => {
     const db = new SimpleDB(storeDest);
     const mabel = {
       name: 'mabel',
-      age:5
+      age: 5,
     };
 
     return db.save(mabel).then(() => {
-      expect(mabel.id).toEqual(expect.any(String)); 
+      expect(mabel.id).toEqual(expect.any(String));
     });
   });
 
@@ -27,7 +26,7 @@ describe('file copier', () => {
     const savedInstance = new SimpleDB(storeDest);
     const mabel = {
       name: 'mabel',
-      age:5
+      age: 5,
     };
 
     return savedInstance
@@ -47,4 +46,25 @@ describe('file copier', () => {
       expect(booger).toBeNull();
     });
   });
-});       
+
+  it('should return all objects', async () => {
+    const allInstances = new SimpleDB(storeDest);
+    const mabel = {
+      name: 'mabel',
+      age: 5,
+    };
+    const zelda = {
+      name: 'zelda',
+      age: 6,
+    };
+    const newArr = [mabel, zelda];
+    await Promise.all(
+      newArr.map((newMap) => {
+        return allInstances.save(newMap);
+      })
+    );
+    return allInstances.getAll().then((pulledFiles) => {
+      expect(pulledFiles).toEqual(expect.arrayContaining([mabel, zelda]));
+    });
+  });
+});
